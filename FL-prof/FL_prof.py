@@ -1,25 +1,9 @@
 # this script takes fluorescence profile data from csv file in which each cell_list fluorescence profile
 # taken from Oufti's output Matlab file is a column
 
-
-#import itertools
-#import sys
-#import matplotlib
 from matplotlib import pyplot as plt
-#import math # 'math' needed for 'sqrt'
 import csv
 import numpy as np
-#import re
-#import os
-#from scipy.stats import kde
-#from scipy.interpolate import spline
-#import matplotlib.colors as colors
-#from scipy.optimize import curve_fit
-#from scipy.interpolate import spline
-#import matplotlib.colors as colors
-#import matplotlib.gridspec as gridspec
-#import random
-#from matplotlib.colors import LogNorm
 ################################################################################
 
 ################################################################################
@@ -122,6 +106,7 @@ ax[0,0].plot(xModel, yModel, c='b', linewidth=2)
 ################################################################################
 
 ################################################################################
+# plot parameters
 ax[0,0].set_xlim([-0.01, 1.01])
 ax[0,0].set_ylim([0, 1])
 fig.patch.set_facecolor('w')
