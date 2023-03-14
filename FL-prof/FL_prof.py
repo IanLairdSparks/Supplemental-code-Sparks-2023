@@ -20,12 +20,8 @@ import matplotlib.colors as colors
 import matplotlib.gridspec as gridspec
 import random
 from matplotlib.colors import LogNorm
-################################################################################
-def longest(list1):
-    longest_list = max(len(elem) for elem in list1)
-    return longest_list
-################################################################################
-################################################################################
+
+
 file = 'KO_FL.csv'
 #open csv file
 with open(file, "rb") as inFile:
@@ -44,13 +40,6 @@ with open(file, "rb") as inFile:
                 cell_list[i].append(float(row[i]))
     inFile.close()
 
-#determine the longest cell length so that you can define the width of your figure
-longest_cell_length = longest(cell_list)
-
-#align all cells so that their brightest half is on the left
-##for cell in cell_list:
-    ##if (cell.index(max(cell))+1) > (len(cell)/2):
-        ##cell.reverse()
 
 #initialize the x and y variables
 x = []
@@ -82,7 +71,7 @@ ax[0,0].plot(xModel, yModel, c='r', linewidth=2)
 
 ################################################################################
 file = 'WT_FL.csv'
-#open csv file
+#open and read csv file containing Oufti fluorescence profiles as columns
 with open(file, "rb") as inFile:
     csv_reader = csv.reader(inFile, delimiter=',')
     #next(csv_reader) # read first line to skip it
@@ -99,18 +88,11 @@ with open(file, "rb") as inFile:
                 cell_list[i].append(float(row[i]))
     inFile.close()
 
-#determine the longest cell length so that you can define the width of your figure
-longest_cell_length = longest(cell_list)
-
-#align all cells so that their brightest half is on the left
-##for cell in cell_list:
-    ##if (cell.index(max(cell))+1) > (len(cell)/2):
-        ##cell.reverse()
 
 #initialize the x and y variables
-x = []##
-y = []##
-y2 = []##
+x = []
+y = []
+y2 = []
 for cell in cell_list:
     for i in range(len(cell)):
         normalized_lateral_position = (float(i+1))/(float(len(cell)))
@@ -118,7 +100,7 @@ for cell in cell_list:
         y.append(float(cell[i]))
         normalized_FL = (float(cell[i]))/(float(max(cell)))
         y2.append(normalized_FL)
-    #ax[0,0].plot(x, y2, c='b', linewidth=2)
+ 
 #set order of polynomial regression
 degree = 700
 #plot points
@@ -131,9 +113,7 @@ fittedParameters = np.polyfit(Xfit, Yfit, degree)
 xModel = np.linspace(min(Xfit), 1)
 yModel = np.polyval(fittedParameters, xModel)
 # now the model as a line plot
-ax[0,0].plot(xModel, yModel, c='b', linewidth=2)##
-################################################################################
-################################################################################
+ax[0,0].plot(xModel, yModel, c='b', linewidth=2)
 ax[0,0].set_xlim([-0.01, 1.01])##
 ax[0,0].set_ylim([0, 1])
 fig.patch.set_facecolor('w')
@@ -141,11 +121,8 @@ ax[0,0].set(xlabel='Normalized cell length', ylabel='Fluorescence intensity')
 ax[0,0].set_title("20hr LB log phase + 15min 10 " + u"\u03bcM" + " RADA")
 ax[0,0].set_xticks([0, 0.5, 1])
 ax[0,0].set_xticklabels(['new pole', 'midcell', 'old pole'])
-
 ax[0,0].plot([0.05,0.1],[0.8,0.8], c='b', linewidth=2)
 ax[0,0].text(0.11, 0.79, "WT, n = 78", fontsize=15, color ='b')
-
 ax[0,0].plot([0.05,0.1],[0.7,0.7], c='r', linewidth=2)
 ax[0,0].text(0.11, 0.69, "mptA KO, n = 71", fontsize=15, color ='r')
-
 plt.show()
